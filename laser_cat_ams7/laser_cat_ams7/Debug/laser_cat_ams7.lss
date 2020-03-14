@@ -173,10 +173,10 @@ ISR(TIMER0_COMPA_vect){
  13c:	b0 93 0c 01 	sts	0x010C, r27	; 0x80010c <activate+0x3>
  140:	46 c0       	rjmp	.+140    	; 0x1ce <__vector_14+0x128>
 			} else { 
-				activate = 72000; //2 hours
- 142:	80 e4       	ldi	r24, 0x40	; 64
- 144:	99 e1       	ldi	r25, 0x19	; 25
- 146:	a1 e0       	ldi	r26, 0x01	; 1
+				activate = 7200; //2 hour between operation
+ 142:	80 e2       	ldi	r24, 0x20	; 32
+ 144:	9c e1       	ldi	r25, 0x1C	; 28
+ 146:	a0 e0       	ldi	r26, 0x00	; 0
  148:	b0 e0       	ldi	r27, 0x00	; 0
  14a:	80 93 09 01 	sts	0x0109, r24	; 0x800109 <activate>
  14e:	90 93 0a 01 	sts	0x010A, r25	; 0x80010a <activate+0x1>
@@ -311,7 +311,6 @@ void init_timer(){
  234:	84 b5       	in	r24, 0x24	; 36
  236:	82 60       	ori	r24, 0x02	; 2
  238:	84 bd       	out	0x24, r24	; 36
-	//TCCR0B |= (1<<CS02) | (1<<CS00); // 1024 prescaler
 	TCCR0B |= (1<<CS01);// | 8 prescaler
  23a:	85 b5       	in	r24, 0x25	; 37
  23c:	82 60       	ori	r24, 0x02	; 2
@@ -323,7 +322,7 @@ void init_timer(){
  246:	82 60       	ori	r24, 0x02	; 2
  248:	80 83       	st	Z, r24
 	
-	//Each Overflow is work .1ms : ((1/(16,000,000clk/8 prescale)) * 1000 us to ms) * 200 Overflows
+	//Each Overflow is work .1ms : ((1/(16,000,000clk/8 prescale)) * 1000 us to ms) * 200 Overflows =.1ms
 	OCR0A = 199;
  24a:	87 ec       	ldi	r24, 0xC7	; 199
  24c:	87 bd       	out	0x27, r24	; 39

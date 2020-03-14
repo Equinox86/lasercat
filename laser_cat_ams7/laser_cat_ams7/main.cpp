@@ -43,7 +43,7 @@ ISR(TIMER0_COMPA_vect){
 			if(activate > 0) {
 				activate --;
 			} else { 
-				activate = 72000; //2 hour between operation
+				activate = 7200; //2 hour between operation
 				active = false;	
 				PORTB ^= (1<<4);
 			}
@@ -87,11 +87,10 @@ void init_timer(){
 	TCNT0 = 0; //Set Counter to 0;
 	DDRB |= (1<<5); 
 	TCCR0A |= (1<<WGM01); //CTC Mode
-	//TCCR0B |= (1<<CS02) | (1<<CS00); // 1024 prescaler
 	TCCR0B |= (1<<CS01);// | 8 prescaler
 	TIMSK0|= (1<<OCIE0A); // Interrupt Service Routine COMPA
 	
-	//Each Overflow is work .1ms : ((1/(16,000,000clk/8 prescale)) * 1000 us to ms) * 200 Overflows
+	//Each Overflow is work .1ms : ((1/(16,000,000clk/8 prescale)) * 1000 us to ms) * 200 Overflows =.1ms
 	OCR0A = 199;
 }
 int main(void)
